@@ -12,8 +12,8 @@ Do factors such as therapeutic area, indication, technology type, phase of devel
 
 ## Hypothesis & Predictions
 **Hypothesis:**  
-Historical funding data can be used to predict the amount of funding a biotech company will receive because it tells us about the patterns of how funding has been allocated historically relative to therapeutic area, indication, technology type, and stage of development. 
+Historical funding data can be used to predict the amount of funding a biotech company will receive because it tells us about the patterns of how funding has been allocated historically relative to therapeutic area, indication, technology type, stage of development, and other features. 
 
 **Predictions:**  
-Biotech companies developing treatments in high-interest therapeutic areas, indications, and technology types, and who are in later stages of development will receive higher funding amounts. 
+Biotech companies developing treatments in high-interest therapeutic areas, indications, technology types, stages of development, and other features will receive higher funding amounts. 
 
