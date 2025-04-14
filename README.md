@@ -253,13 +253,6 @@ All code for this project has been both **self-tested** and **user-tested** to e
 
 - **User-Tested**: The same scripts were run on a MacOS machine by another user (non-author). The project executed without modification or error, confirming platform independence.
 
-```python
-# TEST PASSED: Dataset loaded and preprocessed without missing values.
-# TEST PASSED: Count encoding matches expected category frequency.
-# TEST PASSED: Log transformation and StandardScaler applied correctly.
-# TEST PASSED: Models trained and evaluated without errors.
-```
-
 This validation process ensures that the project is reproducible, stable, and portable across systems.
 
 ---
