@@ -68,70 +68,66 @@ Most of the data for this project was sourced from DealForma, a biopharma databa
 
 ---
 
-### Data Dictionary
+### Data Dictionary (Post-EDA)
 
-| Variable Name             | Variable Description                                 | Details                                               | Role in Analysis          |
-|--------------------------|------------------------------------------------------|--------------------------------------------------------|----------------------------|
-| amount                   | Amount of funding in USD                            | Numeric – float64 (currency)                           | Outcome Variable           |
-| company                  | Biopharma company name                              | Category (string label)                                | Identifier                 |
-| round                    | Funding round                                       | Category – One-hot encoded                             | Predictor                  |
-| completed                | Date the deal was completed                         | Date – datetime.date                                   | Predictor                  |
-| federal_fund_effective_rate | Federal fund effective rate at time of funding    | Numeric – float64                                      | Predictor (macroeconomic)  |
-| 10yr_treasury_yield      | Ten-year treasury yield at time of funding          | Numeric – float64                                      | Predictor (macroeconomic)  |
-| lead_investor_this_round | Lead investor for that funding instance             | Category – One-hot encoded (includes 'Unknown')        | Predictor                  |
-| lead_investor_co_type    | Lead investor type (e.g., private equity, corp vc)  | Category – One-hot encoded (includes 'Unknown')        | Predictor                  |
-| stage_at_funding         | Drug development stage at time of funding           | Category – One-hot encoded (includes 'Unknown')        | Predictor                  |
-| primary_ta               | Primary therapeutic area of the company             | Category – One-hot encoded                             | Predictor                  |
-| indications              | Primary indication of the company                   | Category – One-hot encoded                             | Predictor                  |
-| primary_tech             | Primary technology of the company                   | Category – One-hot encoded                             | Predictor                  |
-| company_type             | Classification of company (e.g., public small)      | Category – One-hot encoded (includes 'Unknown')        | Predictor                  |
-| location                 | State the company is headquartered in               | Category – One-hot encoded (includes 'Unknown')        | Predictor                  |
-| business_model           | Business model (e.g., early stage R&D only)         | Category – One-hot encoded (includes 'Unknown')        | Predictor                  |
-| public_private           | States if company is public or private              | Category – One-hot encoded (includes 'Unknown')        | Predictor                  |
-| total_raised_all_rounds  | Amount USA raised in all funding rounds             | Numeric – float64 (currency)                           | Predictor                  |
+| Variable Name                  | Description                                  | Details                                           | Role            |
+|-------------------------------|----------------------------------------------|--------------------------------------------------|-----------------|
+| `amount`                      | Funding amount (USD)                         | Log-transformed; imputed via Random Forest       | Target Variable |
+| `round`                       | Funding round                                | Count encoded; 16 levels                         | Predictor       |
+| `completed_year`              | Year the deal closed                         | Numeric; median imputed                          | Predictor       |
+| `federal_fund_effective_rate` | Federal fund rate at time of funding         | Numeric; median imputed                          | Predictor       |
+| `stage_at_funding`            | Drug development stage                       | Top 6 + 'Other'; count encoded                   | Predictor       |
+| `primary_ta`                  | Primary therapeutic area                     | Collapsed + count encoded                        | Predictor       |
+| `indications`                 | Indication targeted                          | Top 10 + 'Other'; count encoded                  | Predictor       |
+| `primary_tech`                | Core technology used                         | Top 19 + 'Other'; count encoded                  | Predictor       |
+| `company_type`                | Company classification                       | Count encoded (3 nominal categories)             | Predictor       |
+| `location`                    | Headquarters state                           | Top 5 states + 'Other'; count encoded            | Predictor       |
+| `business_model`              | Business model description                   | Count encoded (12 nominal categories)            | Predictor       |
+| `public_private`              | Public vs. Private                           | Binary encoded (0 = Public, 1 = Private)         | Predictor       |
 
 ---
 
 ### Analysis Plan
 
-**Outcome variable:** `amount` (funding amount)  
-**Predictor variables:** See table above
+**Preprocessing Steps:**
+- Dropped high-missingness predictors (`lead_investor_this_round`, `lead_investor_co_type`)
+- Dropped highly collinear variables (`total_raised_all_rounds`, `10yr_treasury_yield`)
+- Removed Public Large companies (skewed and not relevant to stakeholders)
+- Count encoding for nominal categorical variables
+- Median imputation for skewed numerical predictors
+- Random Forest imputation for target variable (`amount`)
+- Log transformation of `amount`
+- StandardScaler applied to all features
 
-**Dataset:**
-- ~10,000 rows
-- 14 features
+**Modeling Techniques:**
+- **Unsupervised Learning:**
+  - PCA for dimensionality reduction
+  - K-Means clustering to identify company profiles
 
-**Data Cleaning Steps:**
-- One-hot encoding categorical variables
-- Normalizing continuous variables
-- Handling missing values
-- Dropping unnecessary fields
-
-> Note: The `indications` column was cleaned to retain only the primary indication.
-
-**Models Used:**
-- **Linear Regression** – Baseline model to assess basic relationships
-- **Random Forest Regressor** – For capturing complex patterns and feature importance
-- **Feedforward Neural Network**
-  - Simple version
-  - Advanced version (dropout, batch norm, regularization)
-- **K-Means Clustering** – To group companies based on traits and funding
-- **PCA (Principal Component Analysis)** – Dimensionality reduction + regression
+- **Supervised Learning:**
+  - Linear Regression (baseline)
+  - Random Forest Regressor
+  - Neural Network (basic and regularized)
 
 **Evaluation Metrics:**
-- **Supervised Models:** MAE, MSE, R-squared, residual plots, learning curves
-- **Unsupervised Models:** Silhouette score (K-Means), explained variance (PCA), cluster plots
+- MAE, MSE, R² for regression
+- Silhouette Score for clustering
+- Explained variance ratio for PCA
 
-**Hyperparameter Tuning:** Grid search or random search
+**Validation:**
+- 5-fold cross-validation
+- Hyperparameter tuning via grid or random search
 
-**Success Criteria:**  
-If models accurately predict funding on unseen data, the hypothesis is supported.
+**Success Criteria:**
+- The hypothesis will be supported if models can accurately predict funding amounts on unseen data.
 
 ---
 
 ### Tools
 
-All work will be done in **Python**.
+- Python  
+- pandas, numpy, scikit-learn, seaborn, matplotlib  
+- GitHub for version control
 
 ---
 
@@ -143,5 +139,7 @@ All work will be done in **Python**.
 
 ### References
 
-- Adam, J. (2024, July 5). *The ABC of biotech startup funding*. Labiotech.eu. https://www.labiotech.eu/expert-advice/biotech-startup-funding/
-- Gatlin, A. (2025, January 13). *Biotech stocks prepare for action in 2025: Weight-loss drugs, AI, and Trump 2.0 are the catalysts.* Investor's Business Daily. https://www.investors.com/news/technology/biotech-stocks-2025-weight-loss-drugs-ai-trump/
+- Adam, J. (2024, July 5). *The ABC of biotech startup funding*. Labiotech.eu. https://www.labiotech.eu/expert-advice/biotech-startup-funding/  
+- Gatlin, A. (2025, January 13). *Biotech stocks prepare for action in 2025: Weight-loss drugs, AI, and Trump 2.0 are the catalysts.* Investor's Business Daily. https://www.investors.com/news/technology/biotech-stocks-2025-weight-loss-drugs-ai-trump/  
+- DealForma. https://www.dealforma.com  
+- Federal Reserve. https://www.federalreserve.gov/datadownload/
