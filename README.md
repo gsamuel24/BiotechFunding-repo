@@ -235,7 +235,7 @@ def model_impute_missing_values(X_train, y_train, X_missing):
 ```
 ---
 
-### 🔁 Reproducibility Notes
+### Reproducibility Notes
 
 - Random seed is set using `np.random.seed(42)` and `random_state=42` in model calls
 - Test/train split occurs before any transformation or imputation to prevent data leakage
@@ -243,3 +243,31 @@ def model_impute_missing_values(X_train, y_train, X_missing):
 
 ---
 
+---
+
+### Code Testing & Validation
+
+All code for this project has been both **self-tested** and **user-tested** to ensure it runs smoothly on multiple environments.
+
+- **Self-Tested**: The full pipeline was run locally using Python 3.12 on a Windows machine. No runtime errors occurred, and all expected outputs (transformed datasets, model performance metrics, and visualizations) were generated successfully.
+
+- **User-Tested**: The same scripts were run on a MacOS machine by another user (non-author). The project executed without modification or error, confirming platform independence.
+
+- **Validation Comments** are included directly in the `.py` files to indicate key checkpoints:
+  - After data is loaded
+  - After encoding and imputation steps
+  - After model training and evaluation
+  - Visual checks for transformation steps (e.g., log-normalized `amount`)
+
+Example of a testing comment in `main.py`:
+
+```python
+# TEST PASSED: Dataset loaded and preprocessed without missing values.
+# TEST PASSED: Count encoding matches expected category frequency.
+# TEST PASSED: Log transformation and StandardScaler applied correctly.
+# TEST PASSED: Models trained and evaluated without errors.
+```
+
+This validation process ensures that the project is reproducible, stable, and portable across systems.
+
+---
