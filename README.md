@@ -143,3 +143,103 @@ Most of the data for this project was sourced from DealForma, a biopharma databa
 - Gatlin, A. (2025, January 13). *Biotech stocks prepare for action in 2025: Weight-loss drugs, AI, and Trump 2.0 are the catalysts.* Investor's Business Daily. https://www.investors.com/news/technology/biotech-stocks-2025-weight-loss-drugs-ai-trump/  
 - DealForma. https://www.dealforma.com  
 - Federal Reserve. https://www.federalreserve.gov/datadownload/
+
+---
+
+#### Reproducibility & Setup Instructions
+
+This project is written entirely in **Python 3.12+** and is structured to allow others to reproduce the analysis from start to finish.
+
+#### Requirements
+
+The following packages are required to run the code:
+
+```bash
+pandas
+numpy
+scikit-learn
+matplotlib
+seaborn
+joblib
+```
+
+You can install them using pip:
+
+```bash
+pip install -r requirements.txt
+```
+
+#### How to Run the Analysis
+
+1. Clone the repo:
+
+```bash
+git clone https://github.com/gsamuel24/DSE6311-repo.git
+cd DSE6311-repo
+```
+
+2. Upload or place the cleaned dataset in the same folder as the script file.
+3. Run the script file to execute the full pipeline:
+
+```bash
+python main.py
+```
+
+This will:
+- Load and preprocess the dataset
+- Apply encoding, imputation, normalization, and transformation
+- Run PCA, clustering, and multiple regression models
+- Output visualizations and model metrics
+
+---
+
+### Custom Functions
+
+Several custom helper functions were written for this project and can be found in the `utils.py` file (if separated) or defined within `main.py`.
+
+#### Example Functions
+
+```python
+def count_encode(train_col, test_col):
+    """
+    Apply count encoding to a categorical column.
+
+    Parameters:
+    train_col (pd.Series): Training set column
+    test_col (pd.Series): Test set column
+
+    Returns:
+    Tuple[pd.Series, pd.Series]: Encoded training and test columns
+    """
+    freq = train_col.value_counts()
+    return train_col.map(freq).fillna(0), test_col.map(freq).fillna(0)
+```
+
+```python
+def model_impute_missing_values(X_train, y_train, X_missing):
+    """
+    Impute missing target values using a Random Forest Regressor.
+
+    Parameters:
+    X_train (pd.DataFrame): Features for known targets
+    y_train (pd.Series): Known target values
+    X_missing (pd.DataFrame): Features where target is missing
+
+    Returns:
+    np.ndarray: Imputed target values
+    """
+    from sklearn.ensemble import RandomForestRegressor
+    rf = RandomForestRegressor()
+    rf.fit(X_train, y_train)
+    return rf.predict(X_missing)
+```
+---
+
+### 🔁 Reproducibility Notes
+
+- Random seed is set using `np.random.seed(42)` and `random_state=42` in model calls
+- Test/train split occurs before any transformation or imputation to prevent data leakage
+- Log transformation, standardization, and encoding follow best practices to ensure validity
+
+---
+
