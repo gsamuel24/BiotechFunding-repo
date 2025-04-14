@@ -253,14 +253,6 @@ All code for this project has been both **self-tested** and **user-tested** to e
 
 - **User-Tested**: The same scripts were run on a MacOS machine by another user (non-author). The project executed without modification or error, confirming platform independence.
 
-- **Validation Comments** are included directly in the `.py` files to indicate key checkpoints:
-  - After data is loaded
-  - After encoding and imputation steps
-  - After model training and evaluation
-  - Visual checks for transformation steps (e.g., log-normalized `amount`)
-
-Example of a testing comment in `main.py`:
-
 ```python
 # TEST PASSED: Dataset loaded and preprocessed without missing values.
 # TEST PASSED: Count encoding matches expected category frequency.
