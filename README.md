@@ -146,11 +146,11 @@ Most of the data for this project was sourced from DealForma, a biopharma databa
 
 ---
 
-#### Reproducibility & Setup Instructions
+### Reproducibility & Setup Instructions
 
 This project is written entirely in **Python 3.12+** and is structured to allow others to reproduce the analysis from start to finish.
 
-#### Requirements
+### Requirements
 
 The following packages are required to run the code:
 
@@ -169,7 +169,7 @@ You can install them using pip:
 pip install -r requirements.txt
 ```
 
-#### How to Run the Analysis
+### How to Run the Analysis
 
 1. Clone the repo:
 
@@ -197,7 +197,7 @@ This will:
 
 Several custom helper functions were written for this project and can be found in the `utils.py` file (if separated) or defined within `main.py`.
 
-#### Example Functions
+### Example Functions
 
 ```python
 def count_encode(train_col, test_col):
