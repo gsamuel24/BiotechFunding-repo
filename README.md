@@ -3,7 +3,7 @@
 ## Capstone Course
 
 ### Authorship
-Grace Samuel – Team Lead, Recorder, and Spokesperson for Team Epsilon
+Grace Samuel
 
 ---
 
