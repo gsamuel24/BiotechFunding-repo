@@ -1,6 +1,4 @@
-# DSE6311-repo
-
-## Capstone Course
+# BiotechFunding-repo
 
 ### Authorship
 Grace Samuel
